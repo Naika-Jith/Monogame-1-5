@@ -258,8 +258,7 @@ namespace Monogame_1_5
             previousMouse = mouseState;
             mouseState = Mouse.GetState();
 
-            bool clicked = mouseState.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released;
-
+            
             this.Window.Title = mouseState.Position.ToString();
 
 
