@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Monogame_1_5
 {
@@ -114,6 +116,11 @@ namespace Monogame_1_5
         bool hallwaySetup;
         bool abandonedSetup;
 
+        SoundEffect backgroundMusic;
+        SoundEffectInstance musicInstance;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -142,12 +149,9 @@ namespace Monogame_1_5
             abandonedRect = new Rectangle(0, 0, 950, 600);
             endRect = new Rectangle(0, 0, 950, 600);
 
-            //Characters = Detention
-
-            // Snape starts in classroom
-            snapeRect = new Rectangle(340, 320, 300, 290);
-
-            // Students start off screen right
+            //Chracters
+            
+            snapeRect = new Rectangle(0, 320, 300, 290);
             malfoyRect = new Rectangle(1200, 320, 310, 290);
             damonRect = new Rectangle(1200, 317, 187, 290);
             axelRect = new Rectangle(1200, 330, 250, 290);
@@ -157,26 +161,28 @@ namespace Monogame_1_5
 
             timer = 0;
 
-            dialogue1Rect = new Rectangle(420, 40, 170, 170);  // Snape
-            dialogue2Rect = new Rectangle(20, 40, 170, 170);   // Draco
-            dialogue3Rect = new Rectangle(420, 40, 170, 170);  // Snape
-            dialogue4Rect = new Rectangle(620, 40, 170, 170);  // Axel
-            dialogue5Rect = new Rectangle(760, 40, 170, 170);  // Romeo
-            dialogue6Rect = new Rectangle(420, 40, 170, 170);  // Snape
-            dialogue7Rect = new Rectangle(620, 40, 170, 170);  // Axel
-            dialogue8Rect = new Rectangle(420, 40, 170, 170);  // Snape
-            dialogue9Rect = new Rectangle(220, 40, 170, 170);   // Axel
-            dialogue10Rect = new Rectangle(500, 40, 170, 170);  // Damon
-            dialogue11Rect = new Rectangle(760, 40, 170, 170);  // Romeo
-            dialogue12Rect = new Rectangle(500, 40, 170, 170);  // Damon
-            dialogue13Rect = new Rectangle(20, 40, 170, 170);   // Draco
-            dialogue14Rect = new Rectangle(500, 40, 170, 170);  // Damon
-            dialogue15Rect = new Rectangle(20, 40, 170, 170);   // Draco
-            dialogue16Rect = new Rectangle(220, 40, 170, 170);  // Axel
-            dialogue17Rect = new Rectangle(220, 40, 170, 170);  // Damon
-            dialogue18Rect = new Rectangle(220, 40, 170, 170);  // Damon
-            dialogue19Rect = new Rectangle(430, 40, 170, 170);  // Snape
-            dialogue20Rect = new Rectangle(430, 40, 170, 170);  // Snape
+            dialogue1Rect = new Rectangle(60, 100, 170, 170);  // Snape
+            dialogue2Rect = new Rectangle(291, 100, 170, 170);   // Draco
+            dialogue3Rect = new Rectangle(60, 100, 170, 170);  // Snape
+            dialogue4Rect = new Rectangle(451, 100, 170, 170);  // Axel
+            dialogue5Rect = new Rectangle(651,100, 170, 170);  // Romeo
+            dialogue6Rect = new Rectangle(60, 100, 170, 170);  // Snape
+            dialogue7Rect = new Rectangle(451, 100, 170, 170);  // Axel
+            dialogue8Rect = new Rectangle(60, 100, 170, 170);  // Snape
+
+            dialogue9Rect = new Rectangle(451, 100, 170, 170);   // Axel
+            dialogue10Rect = new Rectangle(60, 100, 170, 170);  // Damon
+            dialogue11Rect = new Rectangle(651, 100, 170, 170);  // Romeo
+            dialogue12Rect = new Rectangle(60, 100, 170, 170);  // Damon
+            dialogue13Rect = new Rectangle(344, 100, 170, 170);   // Draco
+            dialogue14Rect = new Rectangle(60, 100, 170, 170);  // Damon
+            dialogue15Rect = new Rectangle(344, 100, 170, 170);   // Draco
+            dialogue16Rect = new Rectangle(451, 100, 170, 170);  // Axel
+            dialogue17Rect = new Rectangle(344, 100, 170, 170);  // Draco
+
+            dialogue18Rect = new Rectangle(320, 100, 170, 170);  // Damon
+            dialogue19Rect = new Rectangle(106, 100, 170, 170);  // Draco
+            dialogue20Rect = new Rectangle(508, 100, 170, 170);  // Snape
 
 
             base.Initialize();
@@ -229,6 +235,14 @@ namespace Monogame_1_5
             dialogue19Texture = Content.Load<Texture2D>("dialogue19");
             dialogue20Texture = Content.Load<Texture2D>("dialogue20");
 
+            //Music
+
+            backgroundMusic = Content.Load<SoundEffect>("soykhaler-dramatic-piano-10950");
+            dunSound = Content.Load<SoundEffect>("mrdwarf92-dramatic-dun-dun-dun-460379");
+
+            musicInstance = backgroundMusic.CreateInstance();
+            musicInstance.IsLooped = true;
+            musicInstance.Play();
 
             // TODO: use this.Content to load your game content here
         }
@@ -254,6 +268,7 @@ namespace Monogame_1_5
 
                 if (timer >= 5f)
                 {
+                    dunSound.Play();
                     currentScreen = Screen.Detention;
                     timer = 0;
                 }
@@ -266,30 +281,30 @@ namespace Monogame_1_5
                 timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 // Draco enters first
-                if (timer > 2 && malfoyRect.X > 20)
+                if (timer > 1 && malfoyRect.X > 170)
                 {
                     malfoyRect.X -= 4;
                 }
 
                 // Axel enters
-                if (timer > 6 && axelRect.X > 620)
+                if (timer > 6 && axelRect.X > 370)
                 {
                     axelRect.X -= 4;
                 }
 
                 // Romeo enters
-                if (timer > 10 && romeoRect.X > 790)
+                if (timer > 9 && romeoRect.X > 570)
                 {
                     romeoRect.X -= 4;
                 }
 
                 // Damon enters
-                if (timer > 14 && damonRect.X > 220)
+                if (timer > 14 && damonRect.X > 770)
                 {
                     damonRect.X -= 4;
                 }
 
-                if (timer >= 24)
+                if (timer >= 27)
                 {
                     currentScreen = Screen.Hallway;
                     timer = 0;
@@ -305,29 +320,29 @@ namespace Monogame_1_5
 
                 if (!hallwaySetup)
                 {
-                    malfoyRect.X = 20;
-                    malfoyRect.Y = 360;
+                    malfoyRect.X = 170;
+                    malfoyRect.Y = 320;
 
-                    axelRect.X = 250;
-                    axelRect.Y = 340;
+                    axelRect.X = 370;
+                    axelRect.Y = 330;
 
-                    romeoRect.X = 760;
-                    romeoRect.Y = 340;
+                    romeoRect.X = 570;
+                    romeoRect.Y = 330;
 
                     damonRect.X = -250;
-                    damonRect.Y = 340;
+                    damonRect.Y = 317;
 
                     hallwaySetup = true;
                 }
 
                 // Damon enters after Axel talks
 
-                if (timer > 3 && damonRect.X < 500)
+                if (timer > 3 && damonRect.X < 60)
                 {
                     damonRect.X += 4;
                 }
 
-                if (timer >= 24)
+                if (timer >= 28)
                 {
                     currentScreen = Screen.Abandoned;
                     timer = 0;
@@ -341,13 +356,13 @@ namespace Monogame_1_5
                 if (!abandonedSetup)
                 {
                     malfoyRect.X = 20;
-                    malfoyRect.Y = 360;
+                    malfoyRect.Y = 320;
 
                     damonRect.X = 220;
-                    damonRect.Y = 350;
+                    damonRect.Y = 317;
 
                     snapeRect.X = 1200;
-                    snapeRect.Y = 310;
+                    snapeRect.Y = 320;
 
                     abandonedSetup = true;
                 }
@@ -364,11 +379,12 @@ namespace Monogame_1_5
                 }
 
 
-                if (timer >= 12)
-                {
-                    currentScreen = Screen.End;
-                    timer = 0;
-                }
+              if (timer >= 15)
+              {
+              dunSound.Play();
+               currentScreen = Screen.End;
+                timer = 0;
+              }
             }
 
             base.Update(gameTime);
@@ -386,7 +402,7 @@ namespace Monogame_1_5
             if (currentScreen == Screen.Intro)  //Intro screen
             {
                 _spriteBatch.Draw(introTexture, introRect, Color.White);
-                _spriteBatch.DrawString(font, "Lorem Ipsum Sit Dolor", new Vector2(20, 500), Color.Gold);
+                _spriteBatch.DrawString(font, "Welcome to Dacelis Academy", new Vector2(6, 220), Color.Gold);
             }
 
             else if (currentScreen == Screen.Detention)
@@ -400,7 +416,7 @@ namespace Monogame_1_5
                 _spriteBatch.Draw(axelTexture, axelRect, Color.White);
                 _spriteBatch.Draw(romeoTexture, romeoRect, Color.White);
 
-                if (timer < 3)
+                if (timer < 4)
                 {
                     _spriteBatch.Draw(dialogue1Texture, dialogue1Rect, Color.White);
                 }
@@ -479,7 +495,14 @@ namespace Monogame_1_5
                 {
                     _spriteBatch.Draw(dialogue16Texture, dialogue16Rect, Color.White);
                 }
-               
+
+                else if (timer < 27)
+                {
+                    _spriteBatch.Draw(dialogue17Texture, dialogue17Rect, Color.White);
+                }
+
+
+
             }
 
             else if (currentScreen == Screen.Abandoned)
@@ -490,19 +513,16 @@ namespace Monogame_1_5
                 _spriteBatch.Draw(damonTexture, damonRect, Color.White);
                 _spriteBatch.Draw(snapeTexture, snapeRect, Color.White);
 
+                
                 if (timer < 3)
-                {
-                    _spriteBatch.Draw(dialogue17Texture, dialogue17Rect, Color.White);
-                }
-                else if (timer < 6)
                 {
                     _spriteBatch.Draw(dialogue18Texture, dialogue18Rect, Color.White);
                 }
-                else if (timer < 9)
+                else if (timer < 6)
                 {
                     _spriteBatch.Draw(dialogue19Texture, dialogue19Rect, Color.White);
                 }
-                else if (timer < 12)
+                else if (timer < 15)
                 {
                     _spriteBatch.Draw(dialogue20Texture, dialogue20Rect, Color.White);
                 }
@@ -513,7 +533,7 @@ namespace Monogame_1_5
             else if (currentScreen == Screen.End)
             {
                 _spriteBatch.Draw(endTexture, endRect, Color.White);
-                _spriteBatch.DrawString(font, "Lorem Ipum Sit Dolor", new Vector2(20, 500), Color.Gold);
+                _spriteBatch.DrawString(font, "And the chaos continues...", new Vector2(6, 220), Color.Gold);
             }
 
             _spriteBatch.End();

@@ -356,6 +356,12 @@
 /processorParam:TextureFormat=Color
 /build:malfoy.png
 
+#begin mrdwarf92-dramatic-dun-dun-dun-460379.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:mrdwarf92-dramatic-dun-dun-dun-460379.wav
+
 #begin proceed.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -391,4 +397,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:snape.png
+
+#begin soykhaler-dramatic-piano-10950.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soykhaler-dramatic-piano-10950.wav
 
