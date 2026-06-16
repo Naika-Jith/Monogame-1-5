@@ -118,6 +118,7 @@ namespace Monogame_1_5
 
         SoundEffect backgroundMusic;
         SoundEffectInstance musicInstance;
+        SoundEffect dunSound;
 
 
 
@@ -268,7 +269,6 @@ namespace Monogame_1_5
 
                 if (timer >= 5f)
                 {
-                    dunSound.Play();
                     currentScreen = Screen.Detention;
                     timer = 0;
                 }
