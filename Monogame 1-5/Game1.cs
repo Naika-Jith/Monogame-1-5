@@ -304,7 +304,7 @@ namespace Monogame_1_5
                     damonRect.X -= 4;
                 }
 
-                if (timer >= 27)
+                if (timer >= 24)
                 {
                     currentScreen = Screen.Hallway;
                     timer = 0;
@@ -342,7 +342,7 @@ namespace Monogame_1_5
                     damonRect.X += 4;
                 }
 
-                if (timer >= 28)
+                if (timer >= 27)
                 {
                     currentScreen = Screen.Abandoned;
                     timer = 0;
@@ -381,8 +381,8 @@ namespace Monogame_1_5
 
               if (timer >= 15)
               {
-              dunSound.Play();
-               currentScreen = Screen.End;
+                dunSound.Play();
+                currentScreen = Screen.End;
                 timer = 0;
               }
             }
